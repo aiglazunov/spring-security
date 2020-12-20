@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,23 +19,24 @@ import web.service.UserService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    /*
-    private UserService userService;
+
+    private UserDetailsService userService;
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public void setUserService(UserDetailsService userService) {
         this.userService = userService;
     }
 
-     */
+
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-        auth.inMemoryAuthentication()
-                .withUser("ADMIN").password("ADMIN").roles("ADMIN")
-                .and()
-                .withUser("USER").password("USER").roles("USER");
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+        //auth.inMemoryAuthentication()
+                //.withUser("ADMIN").password("ADMIN").roles("ADMIN")
+                //.withUser("ADMIN").password("ADMIN").roles("ADMIN")
+                //.and()
+                //.withUser("USER").password("USER").roles("USER");
 
     }
 
@@ -75,7 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        //return new BCryptPasswordEncoder();
+        //return new BCryptPasswordEncoder(5);
         return NoOpPasswordEncoder.getInstance();
     }
+
 }
