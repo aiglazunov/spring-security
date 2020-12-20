@@ -8,7 +8,10 @@
 <body>
 
 <form th:method="POST" th:action="@{/users}" th:object="${user}">
-    <label for="name">Enter name:</label>
+    <input type="hidden" th:field="*{id}" value="${user.id}"/>
+    <input type="hidden" th:field="*{id}" value="${role.id}"/>
+
+    <label for="lastName">Enter name:</label>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>
     <label for="lastName">Enter lastName:</label>
@@ -20,6 +23,26 @@
     <label for="username">Enter username:</label>
     <input type="text" th:field="*{username}" id="username"/>
     <br/>
+    <label for="password">Enter password:</label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <br/>
+    <label th:text="Roles"></label><br/>
+<!--        <select th:field="*{roles}" multiple="multiple">-->
+        <select id="allRoles" name="allRoles" multiple="multiple">
+            <option th:each="role : ${allRoles}"
+                    th:value="${role.role}"
+                    th:text="${role.role}">
+            </option>
+        </select>
+<!--        <label>Roles:-->
+<!--            <input type="checkbox" name="allRoles"-->
+<!--                   th:each="role : ${allRoles}"-->
+<!--                   th:text="${role.role}"-->
+<!--                   th:value="${role.role}"-->
+<!--            />-->
+<!--        </label>-->
+        <br/>
+
     <input type="submit" value = "Add"/>
 
 </form>

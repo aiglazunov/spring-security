@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import web.dao.RoleDaoImp;
 import web.dao.UserDao;
 import web.model.Role;
 import web.model.User;
@@ -15,6 +16,7 @@ import web.model.User;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +26,10 @@ public class UserService  /*implements UserDetailsService */ {
     @Qualifier("userDaoImp")
     private UserDao userDao;
 
+    @Autowired
+    @Qualifier("roleDaoImp")
+    private RoleDaoImp roleDao;
+
     @Transactional
     //@Override
     public void add(User user) {
@@ -31,8 +37,8 @@ public class UserService  /*implements UserDetailsService */ {
     }
 
     @Transactional
-    public void update(long id, User user) {
-        userDao.update(id, user);
+    public void update(User user) {
+        userDao.update(user);
     }
 
     @Transactional
@@ -60,6 +66,16 @@ public class UserService  /*implements UserDetailsService */ {
     //@Override
     public List<User> listUsers() {
         return userDao.listUsers();
+    }
+
+    @Transactional
+    public List<Role> listRoles() {
+        return roleDao.listRoles();
+    }
+
+    @Transactional
+    public Role readRoleOne(String role) {
+        return roleDao.readOne(role);
     }
 
     /*

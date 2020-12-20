@@ -21,6 +21,18 @@
     <label for="username">Enter username:</label>
     <input type="text" th:field="*{username}" id="username"/>
     <br/>
+    <label for="password">Enter password:</label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <br/>
+    <label for="allRoles">Enter roles:</label>
+    <select id="allRoles" name="allRoles" multiple="multiple">
+        <option th:each="role : ${allRoles}"
+                th:value="${role.role}"
+                th:text="${role.role}">
+        </option>
+    </select>
+<!--    <input type="text" th:field="*{roles}" id="role"/>-->
+    <br/>
     <input type="submit" value = "Save"/>
 
 </form>
