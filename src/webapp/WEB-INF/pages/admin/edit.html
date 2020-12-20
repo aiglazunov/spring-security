@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +8,7 @@
 </head>
 <body>
 
-<form th:method="post" th:action="@{/users/{id}/edit(id=${user.getId()})}" th:object="${user}">
+<form th:method="post" th:action="@{/admin/{id}/edit(id=${user.getId()})}" th:object="${user}">
 
     <label for="name">Enter name:</label>
     <input type="text" th:field="*{name}" id="name"/>
@@ -36,6 +37,11 @@
     <input type="submit" value = "Save"/>
 
 </form>
-
+<div>
+    <form sec:authorize="isAuthenticated()" th:method="POST" th:action="@{/logout}">
+        <a th:href="@{/logout}"></a>
+        <button type="submit" >Logout</button>
+    </form>
+</div>
 </body>
 </html>

@@ -19,7 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/admin")
 public class AdminController {
 
     private UserService userService;
@@ -50,24 +50,25 @@ public class AdminController {
             sb.append(role).append(" ");
         }
 
+
         modelMap.addAttribute("username", principal.getName());
         modelMap.addAttribute("roleSet", new String(sb));
 
-        return "users/admin";
+        return "admin/admin";
     }
 
     @GetMapping()
     public String index(Model model) {
         model.addAttribute("users", userService.listUsers());
         //Получим всех людей из DAO и передадим на отображение в представление
-        return "users/index";
+        return "admin/index";
     }
 
     @GetMapping("/new")
     public String newUser(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("allRoles", userService.listRoles());
-        return "users/new";
+        return "admin/new";
     }
 
     @PostMapping()
@@ -83,7 +84,7 @@ public class AdminController {
         user.setRoles(roleSet);
         userService.add(user);
 
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/{id}/edit")
@@ -91,7 +92,7 @@ public class AdminController {
         model.addAttribute("user", userService.show(id));
         //model.addAttribute("allRoles",  new ArrayList<>(userService.show(id).getRoles()));
         model.addAttribute("allRoles", userService.listRoles());
-        return "users/edit";
+        return "admin/edit";
     }
 
     /*
@@ -112,13 +113,13 @@ public class AdminController {
         }
         user.setRoles(roleSet);
         userService.update(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") long id) {
         userService.deleteById(id);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
 
