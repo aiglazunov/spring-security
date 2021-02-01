@@ -1,4 +1,4 @@
-package web.config;
+package web.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,16 +11,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import web.config.handler.LoginSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    private UserDetailsService userService;
+    private final UserDetailsService userService;
 
     @Autowired
-    public void setUserService(UserDetailsService userService) {
+    public SecurityConfig(UserDetailsService userService) {
         this.userService = userService;
     }
 
@@ -30,10 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
         //auth.inMemoryAuthentication()
-                //.withUser("ADMIN").password("ADMIN").roles("ADMIN")
-                //.withUser("ADMIN").password("ADMIN").roles("ADMIN")
-                //.and()
-                //.withUser("USER").password("USER").roles("USER");
+        //.withUser("ADMIN").password("ADMIN").roles("ADMIN")
+        //.withUser("ADMIN").password("ADMIN").roles("ADMIN")
+        //.and()
+        //.withUser("USER").password("USER").roles("USER");
 
     }
 
@@ -70,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // защищенные URL
                 //.antMatchers("/hello").access("hasAnyRole('ADMIN')").anyRequest().authenticated();
                 .antMatchers("/admin/**").access("hasAnyRole('ADMIN')").anyRequest().authenticated();
-                //.antMatchers("/users/**").permitAll();
+        //.antMatchers("/users/**").permitAll();
 
     }
 

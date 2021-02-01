@@ -1,12 +1,7 @@
 package web.config;
 
-import org.springframework.web.context.*;
-import org.springframework.web.context.support.*;
-import org.springframework.web.filter.*;
-import org.springframework.web.servlet.*;
 import org.springframework.web.servlet.support.*;
-
-import javax.servlet.*;
+import web.security.SecurityConfig;
 
 
 public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
